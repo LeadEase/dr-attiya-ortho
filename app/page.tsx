@@ -39,6 +39,7 @@ const DENTALIGN_ADDRESS = "The Showroom, Waud’s Gate, Baildon Road, Baildon, S
 const TRACKING_PHONE_DISPLAY = process.env.NEXT_PUBLIC_TRACKING_PHONE_DISPLAY ?? "01274 003456";
 const TRACKING_PHONE_E164 = process.env.NEXT_PUBLIC_TRACKING_PHONE_E164 ?? "+441274003456";
 const TRACKING_PHONE_HREF = `tel:${TRACKING_PHONE_E164}`;
+const SEND_FAILED = "Sorry, that didn’t go through. Please tap Confirm again, or give us a call and we’ll help you straight away.";
 const MAP_URL = "https://www.google.com/maps/search/?api=1&query=Nu+Dentalign+The+Showroom+Wauds+Gate+Baildon+Road+Baildon+Shipley+BD17+6AB";
 const MAP_EMBED_URL = "https://www.google.com/maps?q=Nu%20Dentalign%20The%20Showroom%20Wauds%20Gate%20Baildon%20Road%20Baildon%20Shipley%20BD17%206AB&output=embed";
 
@@ -129,7 +130,7 @@ function scrollToForm(label: string) {
 function BrandMark({ inverse = false }: { inverse?: boolean }) {
   return (
     <a className={`brand ${inverse ? "brand--inverse" : ""}`} href="#top" aria-label="Dr Attiya Ortho home">
-      <span className="brand__monogram">AA</span>
+      <span className="brand__monogram"><img src="/images/nudental-mark.svg" width="89" height="74" alt="" /></span>
       <span className="brand__text">
         <strong>Dr Attiya</strong>
         <small>ORTHO · NU DENTALIGN</small>
@@ -335,13 +336,15 @@ function EnquiryForm({ idPrefix, compact = false }: { idPrefix: string; compact?
         }),
       });
       const result = (await response.json().catch(() => ({}))) as { message?: string };
-      if (!response.ok) throw new Error(result?.message || `We couldn’t send your enquiry just now. Please try again or call ${TRACKING_PHONE_DISPLAY}.`);
+      // Only show the server's wording for things the patient can fix (e.g. a mistyped email).
+      if (response.status === 400 && result?.message) throw new Error(result.message);
+      if (!response.ok) throw new Error(SEND_FAILED);
       // enquiry_id is a random reference (no personal data) that Google Ads can use to de-duplicate conversions.
       track("enquiry_accepted", { price_awareness: form.priceAware.toLowerCase(), form_id: idPrefix, enquiry_id: enquiryKey.current });
       setStatus("accepted");
     } catch (submissionError) {
       setStatus("error");
-      setError(submissionError instanceof Error ? submissionError.message : "Please try again or call NuDental.");
+      setError(submissionError instanceof Error && submissionError.message !== "Failed to fetch" ? submissionError.message : SEND_FAILED);
     }
   }
 
@@ -413,7 +416,12 @@ function EnquiryForm({ idPrefix, compact = false }: { idPrefix: string; compact?
             </div>
           </fieldset>
           {form.priceAware === "No" && <p className="kind-note">That’s completely fine. The NuDental team can explain pricing when they contact you.</p>}
-          {error && <p className="form-error" role="alert">{error}</p>}
+          {error && (
+            <div className="form-error" role="alert">
+              <p>{error}</p>
+              {error === SEND_FAILED && <PhoneLink className="form-error__call" label={`Call ${TRACKING_PHONE_DISPLAY}`} placement={`${idPrefix}_send_failed`} />}
+            </div>
+          )}
           <button className="cta cta--full" type="submit" disabled={status === "sending"}>{status === "sending" ? "Sending securely…" : "Confirm My Enquiry"} <ArrowRight size={18} /></button>
           <button className="back-button" type="button" onClick={() => { setStep(1); setStatus("idle"); setError(""); }}>← Back to contact details</button>
           <p className="form-note">By submitting, you’re asking NuDental to call or email you about this enquiry. See our <a href="https://www.nudental.co.uk/wp-content/uploads/2022/02/nu-dental-privacy-policy.pdf" target="_blank" rel="noreferrer">privacy notice</a>.</p>
@@ -668,23 +676,14 @@ export default function Home() {
       <section className="section faq" aria-labelledby="faq-title">
         <div className="container faq__grid"><div><span className="eyebrow">A few quick answers</span><h2 id="faq-title">Frequently asked questions</h2><p>Anything else? The NuDental team will be happy to help when they contact you.</p></div><div className="faq-list">
           {[
+            ["How much do clear aligners cost?", "Clear aligner treatment starts from £1,999. Your final price depends on your teeth and treatment plan. At your £25 smile assessment, Dr Attiya will check your smile and give you a personal estimate."],
             ["Can I pay monthly?", "Yes. We offer 0% finance for up to one year. Other payment plans are available for up to five years. Finance is subject to status and lender checks. We will explain the options before you decide."],
-            ["Where can I get clear aligners in Bradford?", `Dr Attiya provides dentist-led clear aligner treatment at Nu Dentalign, ${DENTALIGN_ADDRESS}. The practice is convenient for patients from Bradford, Shipley, Baildon, Bingley, Keighley, Silsden, Otley and Leeds.`],
-            ["Do you offer Invisalign in Bradford?", "We offer clear aligners rather than an Invisalign-branded package. Invisalign is one brand of clear aligner. Dr Attiya will explain the system we use and whether it may suit your teeth and bite."],
-            ["How much do clear aligners cost in Bradford?", "Clear aligner treatment starts from £1,999. Your final price depends on your teeth and treatment plan. At your £25 smile assessment, Dr Attiya will check your smile and give you a personal estimate."],
-            ["Can I see a 3D smile simulation before treatment?", "Yes, where it is helpful. Your assessment includes an iTero 3D scan. Dr Attiya may also show you a digital smile preview. It is a guide, not a promise of the final result."],
-            ["Who plans and checks my treatment?", "Dr Attiya and the NuDental clinical team plan your treatment and check your progress at the practice. They will explain each step and any changes that may be needed."],
             ["What does the £25 assessment include?", "Dr Attiya will check your smile, teeth and bite. You will have an iTero 3D scan, hear which options may suit you and receive an estimated price and timeline. Small X-rays are only taken if they are needed."],
             ["Will clear aligners suit me?", "They do not suit everyone. It depends on your teeth, bite and oral health. Dr Attiya will explain whether clear aligners, fixed braces or another option may be better for you."],
-            ["How long does clear aligner treatment take?", "Everyone is different. The time depends on how much your teeth need to move and how often you wear your aligners. Dr Attiya will give you an estimated timeline after your scan."],
-            ["Can I eat and drink with clear aligners?", "Take your aligners out to eat and for drinks other than plain water. Clean your teeth before putting them back in. We will show you how to look after them."],
-            ["Do clear aligners hurt?", "You may feel some pressure or tenderness when you start a new aligner. This usually settles quickly. Please call us if pain is strong or does not settle."],
-            ["How often will I visit NuDental?", "This depends on your plan and progress. Dr Attiya will tell you how often she needs to see you before treatment starts."],
-            ["What is included in the clear aligner package?", "Your package includes your prescribed aligners, professional teeth whitening where suitable and one retainer at the end of treatment. Your written plan will confirm everything that is included."],
-            ["Are clear aligners the same as invisible braces?", "People often use ‘invisible braces’ to mean discreet teeth straightening. Clear aligners are clear trays that you can remove. Fixed braces stay on your teeth and use brackets and wires."],
-            ["Will I need retainers afterwards?", "Yes, most people need retainers after teeth straightening to help keep their teeth in place. One end-of-treatment retainer is included in the clear aligner package. Dr Attiya will explain how to wear it."],
-            ["Does submitting the form book an appointment?", "No. It asks the NuDental team to contact you. They will discuss your enquiry and arrange an appointment separately."],
-            ["Where can I have clear aligner treatment near Bradford?", `Nu Dentalign is at ${DENTALIGN_ADDRESS}, serving Bradford and surrounding areas including Bingley, Keighley, Leeds, Silsden and Otley.`],
+            ["How long does treatment take?", "Everyone is different. The time depends on how much your teeth need to move and how often you wear your aligners. Dr Attiya will give you an estimated timeline after your scan."],
+            ["Do you offer Invisalign?", "We offer clear aligners rather than an Invisalign-branded package. Invisalign is one brand of clear aligner. Dr Attiya will explain the system we use and whether it may suit your teeth and bite."],
+            ["Where can I get clear aligners near Bradford?", `At Nu Dentalign, ${DENTALIGN_ADDRESS}. It is easy to reach from Bradford, Shipley, Baildon, Bingley, Keighley, Leeds, Silsden and Otley.`],
+            ["Does sending the form book an appointment?", "No. It asks the NuDental team to call you. They will answer your questions and arrange your assessment at a time that suits you."],
           ].map(([question, answer]) => <details key={question}><summary>{question}<ChevronDown aria-hidden="true" /></summary><p>{answer}</p></details>)}
         </div></div>
       </section>

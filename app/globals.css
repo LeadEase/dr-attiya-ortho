@@ -50,6 +50,7 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
 .brand__text { display: flex; flex-direction: column; }
 .brand__text strong { font-family: Georgia, serif; font-size: 19px; font-weight: 500; line-height: 1; }
 .brand__text small { margin-top: 5px; color: #8d6b31; font-size: 8px; font-weight: 800; letter-spacing: .18em; }
+.brand__monogram img { display: block; width: 62%; height: auto; }
 .brand--inverse .brand__monogram { border-color: rgba(255,255,255,.35); color: #fff; }
 .brand--inverse .brand__text small { color: #c6a76e; }
 
@@ -363,7 +364,10 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
 .radio-grid input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 4px; }
 .radio-grid svg { color: var(--jade); }
 .kind-note { margin: 13px 0 !important; padding: 10px 12px; background: #f1eee6; color: #5c6d68 !important; font-size: 11px !important; }
-.form-error { margin: 12px 0 !important; color: #a23939 !important; font-size: 12px !important; font-weight: 700; }
+.form-error { margin: 14px 0; padding: 14px 16px; border: 1px solid rgba(168,133,72,.45); border-radius: 6px; background: #faf6ee; }
+.form-error p { margin: 0 !important; color: #3d3933 !important; font-size: 14px !important; font-weight: 700; line-height: 1.45; }
+.form-error__call { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; color: #2d2923; font-size: 15px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+.form-error__call svg { color: var(--gold); }
 .back-button { width: 100%; margin-top: 15px; border: 0; background: transparent; color: var(--jade); font-size: 11px; font-weight: 700; }
 
 .faq { background: var(--paper); }
@@ -437,7 +441,7 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
 @media (max-width: 760px) {
   .container { width: min(100% - 30px, 620px); }
   .section { padding: 78px 0; }
-  h1 { font-size: clamp(48px, 15vw, 66px); }
+  h1 { font-size: clamp(40px, 11.5vw, 56px); }
   h2 { font-size: clamp(37px, 11vw, 50px); }
   p { font-size: 15px; }
   .header-inner { min-height: 68px; }
@@ -452,7 +456,7 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
   .brand__text strong { font-size: 17px; }
   .hero { min-height: 0; padding-top: 154px; padding-bottom: 58px; }
   .hero__grid { display: flex; min-height: 0; flex-direction: column; align-items: stretch; gap: 42px; }
-  .hero__grid--clinician { gap: 30px; }
+  .hero__grid--clinician { gap: 22px; }
   .hero__copy { padding-top: 0; }
   .hero__copy .eyebrow { margin-bottom: 16px; }
   .hero__lead { margin-bottom: 26px; font-size: 17px; }
@@ -461,7 +465,10 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
   .hero-phone { display: flex; width: max-content; margin: 14px auto 0; font-size: 12px; }
   .hero-portrait { border-radius: 170px 170px 10px 10px; }
   .hero-portrait::before { border-radius: 155px 155px 6px 6px; }
-  .hero-portrait > img { height: 365px; }
+  /* Mobile: Dr Attiya's photo first, compact, so the clinician leads above the fold. */
+  .hero-portrait { order: -1; border-radius: 120px 120px 10px 10px; }
+  .hero-portrait::before { border-radius: 108px 108px 6px 6px; }
+  .hero-portrait > img { height: 270px; object-position: center 14%; }
   .hero-portrait figcaption { padding: 58px 22px 21px; }
   .proof-strip__grid { grid-template-columns: 1fr 1fr; }
   .proof-strip__grid > div { min-height: 128px; padding: 22px 17px; border-bottom: 1px solid rgba(255,255,255,.13); }
@@ -549,7 +556,9 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
   .mobile-sticky { position: fixed; z-index: 70; right: 0; bottom: 0; left: 0; display: grid; padding: 9px 12px calc(9px + env(safe-area-inset-bottom)); grid-template-columns: 84px 1fr; gap: 8px; border-top: 1px solid var(--line); background: rgba(255,255,255,.99); }
   .mobile-sticky .cta { width: 100%; min-height: 48px; padding: 0 13px; font-size: 12px; }
   .mobile-sticky__call { display: flex; min-height: 48px; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--gold); border-radius: 5px; color: #2d2923; font-size: 12px; font-weight: 800; text-decoration: none; }
-  .cookie-banner { bottom: 76px; grid-template-columns: 1fr; gap: 14px; }
+  .cookie-banner { right: 10px; bottom: 76px; width: calc(100% - 20px); grid-template-columns: 1fr; gap: 10px; padding: 14px; }
+  .cookie-banner strong { font-size: 14px; }
+  .cookie-banner p { font-size: 11px; }
   .cookie-banner__actions button { flex: 1; }
   .footer { padding-bottom: 150px; }
 }

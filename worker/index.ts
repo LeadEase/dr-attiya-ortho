@@ -19,6 +19,11 @@ function json(body: Record<string, unknown>, status = 200) {
 }
 
 async function handleEnquiry(request: Request, env: Cloudflare.Env) {
+  // Setup check: shows WHICH settings are present (yes/no only, never their values).
+  if (request.method === "GET") {
+    const settings = { RESEND_API_KEY: !!env.RESEND_API_KEY, ENQUIRIES_TO_EMAIL: !!env.ENQUIRIES_TO_EMAIL, ENQUIRIES_FROM_EMAIL: !!env.ENQUIRIES_FROM_EMAIL };
+    return json({ ready: Object.values(settings).every(Boolean), settings });
+  }
   if (request.method !== "POST") return json({ message: "Method not allowed." }, 405);
   const fetchSite = request.headers.get("sec-fetch-site");
   if (fetchSite && !["same-origin", "same-site", "none"].includes(fetchSite)) return json({ message: "Request not allowed." }, 403);
@@ -46,7 +51,12 @@ async function handleEnquiry(request: Request, env: Cloudflare.Env) {
   if (previous && now - previous < 24 * 60 * 60_000) return json({ accepted: true, duplicate: true });
 
   try {
-    await deliverLead(lead, env);
+    // One automatic retry covers brief email-provider hiccups.
+    try { await deliverLead(lead, env); } catch (first) {
+      if (first instanceof Error && first.message.startsWith("Enquiry delivery is awaiting")) throw first;
+      await new Promise((resolve) => setTimeout(resolve, 800));
+      await deliverLead(lead, env);
+    }
     duplicates.set(lead.idempotencyKey, now);
     return json({ accepted: true });
   } catch (error) {

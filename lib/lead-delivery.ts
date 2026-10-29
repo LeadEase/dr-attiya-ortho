@@ -95,7 +95,7 @@ export async function deliverLead(lead: LeadPayload, env: DeliveryEnvironment) {
 
   if (!response.ok) {
     console.error("Enquiry email provider rejected the request", response.status, response.headers.get("x-request-id") ?? "no-request-id");
-    throw new Error("The enquiry could not be accepted by our email service.");
+    throw new Error(`Email provider rejected the request (HTTP ${response.status}).`);
   }
   return response.json().catch(() => ({}));
 }
