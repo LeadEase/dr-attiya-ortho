@@ -42,6 +42,16 @@ const TRACKING_PHONE_HREF = `tel:${TRACKING_PHONE_E164}`;
 const SEND_FAILED = "Sorry, that didn’t go through. Please tap Confirm again, or give us a call and we’ll help you straight away.";
 const MAP_URL = "https://www.google.com/maps/search/?api=1&query=Nu+Dentalign+The+Showroom+Wauds+Gate+Baildon+Road+Baildon+Shipley+BD17+6AB";
 const MAP_EMBED_URL = "https://www.google.com/maps?q=Nu%20Dentalign%20The%20Showroom%20Wauds%20Gate%20Baildon%20Road%20Baildon%20Shipley%20BD17%206AB&output=embed";
+const ATTRIBUTION_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "gbraid", "wbraid", "fbclid", "topic"];
+
+// Hero wording matched to the ad group via ?topic= on each ad group's final URL. Never use "Invisalign" as our product name.
+const HERO_TOPICS = {
+  "clear-aligners": { eyebrow: "Clear aligners · Bradford & Baildon", lead: "Clear aligners and braces in Bradford, thoughtfully planned around you." },
+  "invisible-braces": { eyebrow: "Invisible braces · Bradford & Baildon", lead: "Discreet clear aligners, often called invisible braces, planned around you in Baildon." },
+  "teeth-straightening": { eyebrow: "Teeth straightening · Bradford & Baildon", lead: "Straighter teeth with clear aligners or braces, thoughtfully planned around you." },
+  "aligner-brands": { eyebrow: "Clear aligners · Bradford & Baildon", lead: "Comparing aligner brands? Dr Attiya will explain which clear aligner option suits your smile." },
+} as const;
+type HeroTopic = keyof typeof HERO_TOPICS;
 
 
 const reviews = [
@@ -458,11 +468,17 @@ function CookieBanner() {
 }
 
 export default function ClearAlignersLanding() {
+  const [topic, setTopic] = useState<HeroTopic>("clear-aligners");
+  const hero = HERO_TOPICS[topic];
+
   useEffect(() => {
-    track("page_view", { page_path: window.location.pathname });
     const params = new URLSearchParams(window.location.search);
+    const requestedTopic = params.get("topic");
+    const pageTopic = requestedTopic && Object.prototype.hasOwnProperty.call(HERO_TOPICS, requestedTopic) ? requestedTopic as HeroTopic : "clear-aligners";
+    setTopic(pageTopic);
+    track("page_view", { page_path: window.location.pathname, page_topic: pageTopic });
     const attribution: Record<string, string> = {};
-    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "gbraid", "wbraid", "fbclid"].forEach((key) => {
+    ATTRIBUTION_KEYS.forEach((key) => {
       const value = params.get(key);
       if (value) attribution[key] = value.slice(0, 180);
     });
@@ -492,9 +508,10 @@ export default function ClearAlignersLanding() {
         <div className="hero__decor hero__decor--one" /><div className="hero__decor hero__decor--two" />
         <div className="container hero__grid hero__grid--clinician">
           <div className="hero__copy">
-            <span className="eyebrow">Clear aligners · Bradford &amp; Baildon</span>
+            <span className="eyebrow">{hero.eyebrow}</span>
             <h1 id="hero-title">Meet Dr Attiya.</h1>
-            <p className="hero__lead">Clear aligners and braces in Bradford, thoughtfully planned around you.</p>
+            <p className="hero__lead">{hero.lead}</p>
+            <p className="hero__price"><strong>Clear aligners from £1,999</strong><span>£25 full smile assessment with Dr Attiya</span></p>
             <CtaButton label="Check My Suitability" className="hero-primary-cta" />
             <PhoneLink className="hero-phone" label={`Or call ${TRACKING_PHONE_DISPLAY}`} placement="hero" />
             <div className="trust-row" aria-label="Trust indicators">

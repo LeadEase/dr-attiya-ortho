@@ -42,7 +42,7 @@ export function parseLead(input: unknown): { lead?: LeadPayload; error?: string 
   if (priceAware !== "Yes" && priceAware !== "No") return { error: "Please choose Yes or No for price awareness." };
   if (!/^[0-9a-f-]{30,80}$/i.test(idempotencyKey)) return { error: "Please refresh the page and try again." };
 
-  const allowedAttribution = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "gbraid", "wbraid", "fbclid"];
+  const allowedAttribution = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "gbraid", "wbraid", "fbclid", "topic"];
   const suppliedAttribution = body.utm && typeof body.utm === "object" ? body.utm as Record<string, unknown> : {};
   const utm: Record<string, string> = {};
   for (const key of allowedAttribution) {
