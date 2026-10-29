@@ -33,7 +33,8 @@ function writeStorage(storage: "local" | "session", key: string, value: string) 
   try { (storage === "local" ? window.localStorage : window.sessionStorage).setItem(key, value); } catch { /* ignore */ }
 }
 
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? "";
+// drattiyaortho.co.uk container in the NU Dental Tag Manager account (not secret).
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-PSXRJKVZ";
 const DENTALIGN_ADDRESS = "The Showroom, Waud’s Gate, Baildon Road, Baildon, Shipley, BD17 6AB";
 const TRACKING_PHONE_DISPLAY = process.env.NEXT_PUBLIC_TRACKING_PHONE_DISPLAY ?? "01274 003456";
 const TRACKING_PHONE_E164 = process.env.NEXT_PUBLIC_TRACKING_PHONE_E164 ?? "+441274003456";
