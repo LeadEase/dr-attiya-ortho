@@ -457,7 +457,7 @@ function CookieBanner() {
   );
 }
 
-export default function Home() {
+export default function ClearAlignersLanding() {
   useEffect(() => {
     track("page_view", { page_path: window.location.pathname });
     const params = new URLSearchParams(window.location.search);

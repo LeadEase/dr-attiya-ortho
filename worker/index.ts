@@ -71,6 +71,12 @@ const worker = {
   async fetch(request: Request, env: Cloudflare.Env, ctx: ExecutionContext) {
     const url = new URL(request.url);
     if (url.pathname === "/api/enquiry") return handleEnquiry(request, env);
+    // The aligner page lives at /clear-aligners. Forward the bare domain there,
+    // keeping ?gclid / ?utm_… so ad attribution survives. 302 (not permanent):
+    // the home page may become its own page later.
+    if (url.pathname === "/" || url.pathname === "") {
+      return Response.redirect(`${url.origin}/clear-aligners${url.search}`, 302);
+    }
     const response = await handler.fetch(request, env, ctx);
     const headers = new Headers(response.headers);
     headers.set("x-content-type-options", "nosniff");

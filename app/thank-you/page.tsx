@@ -16,7 +16,7 @@ export default function ThankYouPage() {
         <p>Your enquiry has been accepted and the practice team will contact you to discuss the next step. No appointment has been confirmed and no payment has been taken.</p>
         <div className="thank-you__actions">
           <a className="cta" href={`tel:${process.env.NEXT_PUBLIC_TRACKING_PHONE_E164 ?? "+441274003456"}`}><Phone size={17} /> Call {process.env.NEXT_PUBLIC_TRACKING_PHONE_DISPLAY ?? "01274 003456"}</a>
-          <Link href="/">Return to the page</Link>
+          <Link href="/clear-aligners">Return to the page</Link>
         </div>
       </section>
     </main>

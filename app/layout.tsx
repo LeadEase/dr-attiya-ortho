@@ -5,12 +5,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://drattiyaortho.co.uk"),
   title: "Clear Aligners & Teeth Straightening Bradford | Dr Attiya Ahmed",
   description: "Book a £25 full smile assessment with Dr Attiya Ahmed at Nu Dentalign in Baildon, near Shipley and Bradford. Explore clear aligners, teeth straightening and fixed braces with a 3D scan and personalised plan.",
-  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     locale: "en_GB",
-    url: "https://drattiyaortho.co.uk/",
+    url: "https://drattiyaortho.co.uk/clear-aligners",
     siteName: "Dr Attiya Ortho",
     title: "Clear Aligners in Bradford with Dr Attiya Ahmed",
     description: "A full £25 smile assessment, 3D scan and personalised clear-aligner or teeth-straightening plan at Nu Dentalign in Baildon, near Shipley and Bradford.",
