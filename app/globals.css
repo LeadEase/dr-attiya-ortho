@@ -179,21 +179,6 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
 .credential-list span { display: flex; align-items: center; gap: 11px; font-size: 14px; font-weight: 700; }
 .credential-list svg { width: 20px; height: 20px; padding: 4px; border-radius: 50%; background: var(--jade); color: #fff; }
 
-.difference { background: #fff; }
-.difference__intro { display: grid; max-width: 1040px; margin-bottom: 48px; grid-template-columns: 1fr .78fr; gap: 8px 70px; align-items: end; }
-.difference__intro .eyebrow { grid-column: 1 / -1; }
-.difference__intro h2, .difference__intro p { margin-bottom: 0; }
-.difference__grid { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-.difference-card { min-height: 330px; padding: 38px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: #f7f5f0; }
-.difference-card > span, .difference-card > div > span { color: #8d6b31; font-size: 9px; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
-.difference-card h3 { margin: 23px 0 14px; font-family: Georgia, serif; font-size: 29px; font-weight: 500; }
-.difference-card p { margin: 0; font-size: 14px; line-height: 1.65; }
-.difference-card--image { display: grid; padding: 0; grid-template-columns: .78fr 1fr; background: #2d2923; color: #fff; }
-.difference-card--image img { display: block; width: 100%; height: 100%; min-height: 330px; object-fit: cover; }
-.difference-card--image > div { display: flex; flex-direction: column; justify-content: center; padding: 32px; }
-.difference-card--image h3 { color: #fff; }
-.difference-card--image p { color: rgba(255,255,255,.65); }
-.difference__note { max-width: 780px; margin: 18px auto 0; color: #7d7770; font-size: 10px; line-height: 1.5; text-align: center; }
 
 .treatments { background: var(--paper); }
 .treatment-table-wrap { overflow-x: auto; border: 1px solid var(--line); background: #fff; box-shadow: 0 20px 48px rgba(36,31,24,.07); }
@@ -425,10 +410,6 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
   .testimonial-video__cards { gap: 12px; }
   .carousel__track { grid-auto-columns: calc((100% - 18px) / 2); }
   .proof-strip__grid > div { padding: 23px 18px; }
-  .difference__intro { gap: 8px 38px; }
-  .difference-card { padding: 30px; }
-  .difference-card--image { padding: 0; grid-template-columns: .62fr 1fr; }
-  .difference-card--image > div { padding: 27px; }
   .finance-section__grid { gap: 40px; }
   .about__grid { gap: 55px; }
   .package-showcase { padding: 34px; }
@@ -498,13 +479,6 @@ p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
   .clinic-inset { bottom: -24px; left: -8px; width: 140px; }
   .clinic-inset img { height: 93px; }
   .about__copy .cta { width: 100%; }
-  .difference__intro { grid-template-columns: 1fr; gap: 12px; }
-  .difference__intro .eyebrow { grid-column: auto; }
-  .difference__grid { grid-template-columns: 1fr; }
-  .difference-card { min-height: 0; padding: 29px 24px; }
-  .difference-card--image { padding: 0; grid-template-columns: 1fr; }
-  .difference-card--image img { height: 220px; min-height: 0; }
-  .difference-card--image > div { padding: 26px 24px 30px; }
   .treatment-table-wrap { margin-right: 0; overflow: hidden; }
   .treatment-table { display: block; min-width: 0; }
   .treatment-table thead, .treatment-table tbody { display: block; }

@@ -583,26 +583,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="section difference" id="difference" aria-labelledby="difference-title">
-        <div className="container">
-          <div className="difference__intro"><span className="eyebrow">Smile-led clear aligner planning</span><h2 id="difference-title">What makes Dr Attiya’s approach different?</h2><p>It starts with understanding why your teeth sit where they do—not simply making them look straighter. Your bite, tooth position, smile and long-term stability are considered together.</p></div>
-          <div className="difference__grid">
-            <article className="difference-card difference-card--image">
-              <img src="/images/package-itero.webp" width="236" height="213" loading="lazy" decoding="async" alt="A patient viewing an iTero digital scan during a clear aligner assessment" />
-              <div><span>01 · See it in 3D</span><h3>Scan and illustrative simulation</h3><p>An iTero 3D scan is taken during your full smile assessment. Where appropriate, an illustrative simulation helps you discuss a possible direction before deciding.</p></div>
-            </article>
-            <article className="difference-card"><span>02 · Look beyond the front teeth</span><h3>The “why” behind your tooth position</h3><p>Dr Attiya assesses your smile, bite, spacing, crowding and oral health to understand what needs to change and which movements may be suitable.</p></article>
-            <article className="difference-card"><span>03 · Personally planned</span><h3>One plan, monitored in practice</h3><p>Your treatment is planned around your individual teeth and reviewed by the NuDental team, with adjustments made when clinically appropriate.</p></article>
-            <article className="difference-card difference-card--image">
-              <img src="/images/spark-aligner-800.webp" width="800" height="585" loading="lazy" decoding="async" alt="Clear aligner model used to explain dentist-led teeth straightening" />
-              <div><span>04 · Finish with stability in mind</span><h3>Alignment, whitening and retention</h3><p>The clear aligner package includes professional whitening where suitable and one end-of-treatment retainer, with your retention plan explained clearly.</p></div>
-            </article>
-          </div>
-          <p className="difference__note">The digital simulation is illustrative, not a guaranteed treatment outcome. Suitability and final treatment planning require a clinical assessment.</p>
-          <div className="centered-cta"><CtaButton label="See What May Be Possible" /></div>
-        </div>
-      </section>
-
       <section className="section clinic-gallery" aria-labelledby="clinic-gallery-title">
         <div className="container">
           <div className="section-heading"><span className="eyebrow">Inside Nu Dentalign</span><h2 id="clinic-gallery-title">A welcoming place to start.</h2><p>Meet the team, see the practice and explore your options in Baildon.</p></div>
