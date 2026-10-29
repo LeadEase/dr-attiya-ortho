@@ -1,3 +1,5 @@
+> **Out of date (29 Oct 2026):** the site now runs on Cloudflare Workers from GitHub, not ChatGPT Sites. See CLAUDE.md and docs/HANDOFF.md.
+
 # Claude technical handover — Dr Attiya Ortho
 
 ## Start here
