@@ -17,6 +17,15 @@ const managedLinux = readExecutionProfile() === "managed-linux";
 const localBindingConfig = {
   // Must match the Worker name in the Cloudflare dashboard.
   name: "dr-attiya-ortho",
+  // Non-secret settings live here so each deploy keeps them.
+  // RESEND_API_KEY is a Cloudflare *Secret* (dashboard), never in code.
+  vars: {
+    ENQUIRIES_TO_EMAIL: "enquiries@nudental.co.uk",
+    ENQUIRIES_FROM_EMAIL: "Dr Attiya Ortho <enquiries@drattiyaortho.co.uk>",
+    NEXT_PUBLIC_TRACKING_PHONE_DISPLAY: "01274 003456",
+    NEXT_PUBLIC_TRACKING_PHONE_E164: "+441274003456",
+  },
+  keep_vars: true,
   main: "./worker/index.ts",
   compatibility_flags: ["nodejs_compat"],
   d1_databases: d1
