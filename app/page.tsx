@@ -562,8 +562,8 @@ export default function Home() {
           <div className="section-heading testimonial-video__heading"><span className="eyebrow">Real patient experiences</span><h2 id="patient-stories-title">Hear from our patients.</h2><p>Patients share their experiences of care and teeth-straightening treatment at NuDental.</p></div>
           <div className="testimonial-video__cards">
             {[
-              { name: "Aamina", poster: "/images/aamina-testimonial-poster-400.webp", video: "/videos/aamina-testimonial.m4v" },
-              { name: "Sara", poster: "/images/sara-testimonial-poster-400.webp", video: "/videos/sara-testimonial.m4v" },
+              { name: "Aamina", poster: "/images/aamina-testimonial-poster-800.webp", video: "/videos/aamina-testimonial-hd.mp4" },
+              { name: "Sara", poster: "/images/sara-testimonial-poster-800.webp", video: "/videos/sara-testimonial-hd.mp4" },
               { name: "Kasia", poster: "/images/kasia-testimonial-poster-800.webp", video: "/videos/kasia-testimonial.m4v" },
             ].map((story) => (
               <article className="testimonial-video__card" key={story.name}>
